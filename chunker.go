@@ -3,24 +3,30 @@ package PDL
 import "fmt"
 
 type Chunk struct {
-	// Chunk struct should start with a capital letter same to the fileds
 	Start int64
 	End   int64
 }
 
 func Split(size, chunkSize int64) ([]Chunk, error) {
 	if size < 0 || chunkSize <= 0 {
-		return nil, fmt.Errorf("size= %d , chunkSize=%d", size, chunkSize)
+		return nil, fmt.Errorf("size=%d, chunkSize=%d", size, chunkSize)
 	}
+
 	var chunks []Chunk
 	for start := int64(0); start < size; start += chunkSize {
 		end := start + chunkSize - 1
-
 		if end > size-1 {
 			end = size - 1
 		}
 		c := Chunk{start, end}
+		/*
+			c := Chunk{
+				End:   end,
+				// Start: start,
+			}
+		*/
 		chunks = append(chunks, c)
 	}
+
 	return chunks, nil
 }
